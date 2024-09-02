@@ -1,0 +1,7 @@
+nav ul li{
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    width: 100%;
+    gap: 5px;
+}
