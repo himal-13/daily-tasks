@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { FaTasks } from 'react-icons/fa';
 import { useAuthContext } from './AuthContext';
 import { auth } from './FIrebaseConfig';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 interface FormData {
     username: string;
@@ -66,6 +66,11 @@ const LoginSignup: React.FC = () => {
         try{
             const credintial = await createUserWithEmailAndPassword(auth,email,password)
         updateAuthState(credintial.user)
+        if(credintial.user){
+            await updateProfile(credintial.user,
+                {displayName:uName}
+            )
+        }
 
         }catch (error){
             console.log(error)
@@ -97,7 +102,6 @@ const LoginSignup: React.FC = () => {
         <div className="min-h-screen w-screen flex flex-col items-center justify-center bg-gray-100 ">
             
             <h1 className='flex items-center justify-center gap-4 text-6xl  font-thin text-nowrap absolute sm:top-[5vh] top-4'> <span>DailyTasks</span><FaTasks/></h1>
-         
             <div className="flex justify-center my-4 gap-3">
             <button
                 onClick={toggleForm}

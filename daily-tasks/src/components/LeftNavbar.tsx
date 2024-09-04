@@ -5,12 +5,13 @@ import { GoSignOut } from "react-icons/go"
 import { MdAccountCircle, MdUpcoming } from "react-icons/md"
 import { useAuthContext } from "../auth/AuthContext"
 
+
 const LeftNavbar = () => {
-    const{handleSignOut}= useAuthContext()
+    const{handleSignOut,currentUser}= useAuthContext()
     return (
         <nav className="w-[300px] pt-6 bg-slate-300 h-screen fixed top-0 left-0 [&>*]:px-4">
             <header className="my-3 flex items-center justify-between">
-                <div className="flex items-center text-xl"><MdAccountCircle className="text-4xl"/><span>username</span></div>
+                <div className="flex items-center text-xl"><MdAccountCircle className="text-4xl"/><span>{currentUser?.displayName??'yourname'}</span></div>
                 <div className="flex text-3xl"><BiNotification/><CiSettings/></div>
 
             </header>
