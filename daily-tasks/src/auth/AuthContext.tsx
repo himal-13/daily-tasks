@@ -1,12 +1,11 @@
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut, User } from "firebase/auth"
+import { onAuthStateChanged, signOut, User } from "firebase/auth"
 import { createContext, ReactNode, useContext, useEffect, useState,} from "react"
-import { auth } from "./FIrebaseConfig"
+import { auth } from "../utils/FIrebaseConfig"
 
 
 interface AuthContextType{
     currentUser:User|null,
     updateAuthState:(user:User|null)=>void
-    handleSignIn:(email:string,password:string)=>void
     isLoading:boolean
     handleSignOut:()=>void
 }
@@ -34,23 +33,13 @@ const AuthContextProvider:React.FC<ReactNodeProp> =({children})=>{
         return () => unsubscribe();
     }, [updateAuthState]);
         
-        const handleSignIn=async(email:string,password:string)=>{
-                
-            try{
-            const credintial= await signInWithEmailAndPassword(auth,email,password);
-            updateAuthState(credintial.user)
-            }catch(error:any){
-                return error;
-            }
-        }
-
         const handleSignOut = async()=>{
             await signOut(auth);
         }
 
 
     return(
-        <AuthContext.Provider value={{currentUser,updateAuthState,handleSignIn,isLoading,handleSignOut}}>
+        <AuthContext.Provider value={{currentUser,updateAuthState,isLoading,handleSignOut}}>
             {children}
         </AuthContext.Provider>
     )
