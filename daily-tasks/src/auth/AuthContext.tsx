@@ -35,13 +35,13 @@ const AuthContextProvider:React.FC<ReactNodeProp> =({children})=>{
     }, [updateAuthState]);
         
         const handleSignIn=async(email:string,password:string)=>{
+                
             try{
             const credintial= await signInWithEmailAndPassword(auth,email,password);
             updateAuthState(credintial.user)
-    }catch(error:any){
-        return error;
-
-    }
+            }catch(error:any){
+                return error;
+            }
         }
 
         const handleSignOut = async()=>{
